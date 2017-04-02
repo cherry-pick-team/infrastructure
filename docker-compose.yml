@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+
+  mongo:
+    build: ./docker/mongo
+    volumes:
+      - mongo_data:/data/db
+    expose:
+      - "27017"
+
+  nginx:
+    build: ./docker/nginx
+    links:
+      - mongo
+      - pg
+      - streaming
+      - search
+    ports:
+      - "80:80"
+    command: /bin/bash -c "nginx -g 'daemon off;'"
+
+  pg:
+    build: ./docker/pg
+    expose:
+      - "5432"
+    volumes:
+      - pg_data::/var/lib/postgresql
+
+  streaming:
+    build: ./docker/streaming
+    links:
+      - pg
+      - mongo
+    expose:
+      - "8080"
+
+  search:
+    build: ./docker/search
+    links:
+      - pg
+      - mongo
+    expose:
+      - "8080"
