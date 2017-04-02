@@ -8,6 +8,8 @@ services:
       - mongo_data:/data/db
     expose:
       - "27017"
+    env_file:
+      - ./docker/.env
 
   nginx:
     build: ./docker/nginx
@@ -19,13 +21,17 @@ services:
     ports:
       - "80:80"
     command: /bin/bash -c "nginx -g 'daemon off;'"
+    env_file:
+      - ./docker/.env
 
   pg:
     build: ./docker/pg
     expose:
       - "5432"
     volumes:
-      - pg_data::/var/lib/postgresql
+      - pg_data:/var/lib/postgresql
+    env_file:
+      - ./docker/.env
 
   streaming:
     build: ./docker/streaming
@@ -34,6 +40,8 @@ services:
       - mongo
     expose:
       - "8080"
+    env_file:
+      - ./docker/.env
 
   search:
     build: ./docker/search
@@ -42,3 +50,11 @@ services:
       - mongo
     expose:
       - "8080"
+    env_file:
+      - ./docker/.env
+
+volumes:
+  mongo_data:
+    external: true
+  pg_data:
+    external: true
