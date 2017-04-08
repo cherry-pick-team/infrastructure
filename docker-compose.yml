@@ -3,55 +3,99 @@ version: "3"
 services:
 
   mongo:
-    build: ./docker/mongo
+    image: mongo
     volumes:
       - mongo_data:/data/db
+    ports:
+      - "27017:27017"
     expose:
       - "27017"
-    env_file:
-      - ./docker/.env
 
-  nginx:
-    build: ./docker/nginx
-    links:
-      - mongo
-      - pg
-      - streaming
-      - search
-    ports:
-      - "80:80"
-    command: /bin/bash -c "nginx -g 'daemon off;'"
-    env_file:
-      - ./docker/.env
+  #nginx:
+  #  build: ./docker/nginx
+  #  links:
+  #    - mongo
+  #    - pg
+  #    - streaming
+  #    - search
+  #  ports:
+  #    - "80:80"
+  #  command: /bin/bash -c "nginx -g 'daemon off;'"
+  #  env_file:
+  #    - ./docker/.env
 
   pg:
-    build: ./docker/pg
+    image: valri/cherry-pg
+    ports:
+      - "5432:5432"
     expose:
       - "5432"
-    volumes:
-      - pg_data:/var/lib/postgresql
-    env_file:
-      - ./docker/.env
+  #  volumes:
+  #    - pg_data:/var/lib/postgresql
 
-  streaming:
-    build: ./docker/streaming
+  #streaming:
+  #  build: ./docker/streaming
+  #  links:
+  #    - pg
+  #    - mongo
+  #  expose:
+  #    - "8080"
+  #  env_file:
+  #    - ./docker/.env
+
+  sphinx:
+    image: valri/cherry-sphinx
+    expose:
+      - "9312"
+      - "9306"
+    ports:
+      - "9306:9306"
     links:
       - pg
-      - mongo
-    expose:
-      - "8080"
-    env_file:
-      - ./docker/.env
+    depends_on:
+      - pg
+    restart: always
 
-  search:
-    build: ./docker/search
-    links:
+  cropper:
+    image: valri/cherry-cropper
+    expose:
+      - "8880"
+    ports:
+      - "8880:8880"
+    depends_on:
+      - mongo
+    restart: always
+
+  api:
+    image: valri/cherry-api
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    depends_on:
       - pg
       - mongo
-    expose:
-      - "8080"
-    env_file:
-      - ./docker/.env
+    links:
+      - pg
+      - cropper
+    restart: always
+    environment:
+     - PSQL_PASSWORD=qwaqwa
+     - PSQL_HOST=pg
+     - CROPPER_HOST=cropper
+     - GENIUS_KEY=XXX
+
+  crawler:
+    image: valri/cherry-crawler
+    environment:
+     - PS_USER=postgres
+     - PS_PASSWORD=qwaqwa
+     - GENIUS_TOKEN=XXX
+    depends_on:
+     - pg
+     - mongo
+    restart: always
+
 
 volumes:
   mongo_data:
