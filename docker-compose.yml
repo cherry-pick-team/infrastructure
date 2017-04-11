@@ -16,13 +16,10 @@ services:
   #  links:
   #    - mongo
   #    - pg
-  #    - streaming
   #    - search
   #  ports:
   #    - "80:80"
   #  command: /bin/bash -c "nginx -g 'daemon off;'"
-  #  env_file:
-  #    - ./docker/.env
 
   pg:
     image: valri/cherry-pg
@@ -32,16 +29,6 @@ services:
       - "5432"
   #  volumes:
   #    - pg_data:/var/lib/postgresql
-
-  #streaming:
-  #  build: ./docker/streaming
-  #  links:
-  #    - pg
-  #    - mongo
-  #  expose:
-  #    - "8080"
-  #  env_file:
-  #    - ./docker/.env
 
   sphinx:
     image: valri/cherry-sphinx
@@ -60,6 +47,11 @@ services:
     image: valri/cherry-cropper
     expose:
       - "8880"
+    links:
+      - mongo
+    environment:
+      - WAIT_HOSTS=mongo:27017
+      - WAIT_BEFORE_HOSTS=5
     ports:
       - "8880:8880"
     depends_on:
@@ -75,30 +67,45 @@ services:
     depends_on:
       - pg
       - mongo
+      - cropper
+      - sphinx
     links:
       - pg
       - cropper
+      - mongo
+      - sphinx
     restart: always
     environment:
+     - WAIT_HOSTS=pg:5432, mongo:27017, cropper:8880, sphinx:9306
+     - WAIT_BEFORE_HOSTS=5
      - PSQL_PASSWORD=qwaqwa
      - PSQL_HOST=pg
+     - PSQL_USER=postgres
+     - MONGO_HOST=mongo
+     - SPHINX_HOST=sphinx
      - CROPPER_HOST=cropper
-     - GENIUS_KEY=XXX
+     - GENIUS_KEY=whl61PGUKPylK_jgfWhWAiuasfHwq1xHxkLBWv-UTuDhGH5n69nkgygEEFivzCXj
 
   crawler:
     image: valri/cherry-crawler
+    links:
+     - pg
+     - mongo
     environment:
+     - WAIT_HOSTS=pg:5432, mongo:27017
+     - WAIT_BEFORE_HOSTS=5
+     - PS_HOST=pg
+     - MONGO_HOST=mongo
      - PS_USER=postgres
      - PS_PASSWORD=qwaqwa
-     - GENIUS_TOKEN=XXX
+     - GENIUS_TOKEN=whl61PGUKPylK_jgfWhWAiuasfHwq1xHxkLBWv-UTuDhGH5n69nkgygEEFivzCXj
     depends_on:
      - pg
      - mongo
-    restart: always
-
 
 volumes:
   mongo_data:
     external: true
   pg_data:
     external: true
+

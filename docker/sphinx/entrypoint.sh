@@ -17,12 +17,12 @@ if [ "$1" = 'sphinx' ]; then
 		fi
 
 		echo "Start Sphinxsearch Indexer for \"$indexes\" indexes"
-		su - sphinx -c "/usr/bin/indexer $indexes"
+		su - root -c "/usr/bin/indexer $indexes"
 	fi
 
 	echo "Starting Sphinx"
 	/usr/bin/searchd -c /etc/sphinx/sphinx.conf
-	
+
 	echo "[hit enter key to exit] or run 'docker stop <container>'"
 	sleep infinity
 
@@ -35,7 +35,7 @@ elif [ "$1" = 'indexer' ]; then
 		indexes='--all'
 	fi
 	echo "Start Sphinxsearch Indexer for \"$indexes\" indexes"
-	su - sphinx -c "/usr/bin/indexer --rotate $indexes"
+	su - root -c "/usr/bin/indexer --rotate $indexes"
 elif [ "$1" = 'crontab' ]; then
 	crontab -e -u sphinx
 elif [ "$1" = 'console' ]; then
