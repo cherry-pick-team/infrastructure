@@ -1,6 +1,16 @@
-version: "3"
+version: "2"
 
 services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    expose:
+      - "80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - api
 
   mongo:
     image: mongo
@@ -11,24 +21,14 @@ services:
     expose:
       - "27017"
 
-  #nginx:
-  #  build: ./docker/nginx
-  #  links:
-  #    - mongo
-  #    - pg
-  #    - search
-  #  ports:
-  #    - "80:80"
-  #  command: /bin/bash -c "nginx -g 'daemon off;'"
-
   pg:
     image: valri/cherry-pg
     ports:
       - "5432:5432"
     expose:
       - "5432"
-  #  volumes:
-  #    - pg_data:/var/lib/postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql
 
   sphinx:
     image: valri/cherry-sphinx
@@ -108,4 +108,3 @@ volumes:
     external: true
   pg_data:
     external: true
-
