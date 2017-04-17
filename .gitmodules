@@ -1,0 +1,6 @@
+[submodule "services/api"]
+	path = services/api
+	url = https://github.com/cherry-pick-team/api
+[submodule "services/crawler"]
+	path = services/crawler
+	url = https://github.com/cherry-pick-team/database-filler

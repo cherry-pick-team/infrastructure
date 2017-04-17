@@ -2,18 +2,18 @@ version: "2"
 
 services:
   nginx:
-    image: nginx:latest
+    build: ./services/nginx
     ports:
       - "80:80"
     expose:
       - "80"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./services/nginx:/etc/nginx/conf.d
     depends_on:
       - api
 
   mongo:
-    image: mongo
+    build: ./services/mongo
     volumes:
       - mongo_data:/data/db
     ports:
@@ -22,7 +22,7 @@ services:
       - "27017"
 
   pg:
-    image: valri/cherry-pg
+    build: ./services/pg
     ports:
       - "5432:5432"
     expose:
@@ -31,7 +31,7 @@ services:
       - pg_data:/var/lib/postgresql
 
   sphinx:
-    image: valri/cherry-sphinx
+    build: ./services/sphinx
     expose:
       - "9312"
       - "9306"
@@ -44,7 +44,7 @@ services:
     restart: always
 
   cropper:
-    image: valri/cherry-cropper
+    build: ./services/cropper
     expose:
       - "8880"
     links:
@@ -59,7 +59,7 @@ services:
     restart: always
 
   api:
-    image: valri/cherry-api
+    build: ./services/api
     expose:
       - "5000"
     ports:
@@ -87,7 +87,7 @@ services:
      - GENIUS_KEY=whl61PGUKPylK_jgfWhWAiuasfHwq1xHxkLBWv-UTuDhGH5n69nkgygEEFivzCXj
 
   crawler:
-    image: valri/cherry-crawler
+    build: ./services/crawler
     links:
      - pg
      - mongo
