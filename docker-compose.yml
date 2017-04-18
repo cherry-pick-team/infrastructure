@@ -69,11 +69,13 @@ services:
       - mongo
       - cropper
       - sphinx
+      - cache
     links:
       - pg
       - cropper
       - mongo
       - sphinx
+      - cache
     restart: always
     environment:
      - WAIT_HOSTS=pg:5432, mongo:27017, cropper:8880, sphinx:9306
@@ -85,6 +87,12 @@ services:
      - SPHINX_HOST=sphinx
      - CROPPER_HOST=cropper
      - GENIUS_KEY=whl61PGUKPylK_jgfWhWAiuasfHwq1xHxkLBWv-UTuDhGH5n69nkgygEEFivzCXj
+
+  cache:
+    image: memcached:alpine
+    ports:
+      - "11211"
+    command: memcached -m 1024m
 
   crawler:
     build: ./services/crawler
