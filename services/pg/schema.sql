@@ -14,6 +14,7 @@ CREATE TABLE transcription(
 	end_time_ms	int NOT NULL,
 	phrase	text	NOT NULL,
 	created_at	timestamp with time zone default(now()));
+
 CREATE TABLE song_history(
 	id	SERIAL  NOT NULL PRIMARY KEY,
 	songId 	int REFERENCES songs,
