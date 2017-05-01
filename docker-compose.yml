@@ -31,7 +31,7 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   sphinx:
-    image: valri/cherry-sphinx
+    build: ./services/sphinx
     expose:
       - "9312"
       - "9306"
