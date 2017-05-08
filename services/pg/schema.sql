@@ -1,11 +1,18 @@
+CREATE TABLE album(
+        id      SERIAL NOT NULL PRIMARY KEY,
+        title   varchar(100)    NOT NULL,
+        cover_id        varchar(50) NOT NULL,
+        year    int NOT NULL,
+        created_at      timestamp with time zone default(now()));
+
 CREATE TABLE songs(
 	id	SERIAL	NOT NULL PRIMARY KEY,
 	author 	text	NOT NULL,
 	title 	text	NOT NULL,
 	lyrics 	text	NOT NULL,
 	file_id	varchar(50)	NOT NULL,
-	genius_id int UNIQUE NOT NULL ,
-	created_at	timestamp with time zone default(now()));
+	created_at	timestamp with time zone default(now()),
+	album_id	int REFERENCES album);
 
 CREATE TABLE transcription(
 	id	SERIAL  NOT NULL PRIMARY KEY,
