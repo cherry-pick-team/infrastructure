@@ -7,3 +7,6 @@
 [submodule "services/cropper"]
 	path = services/cropper
 	url = https://github.com/cherry-pick-team/cut-music-service
+[submodule "services/yandex-music-downloader"]
+	path = services/yandex-music-downloader
+	url = https://github.com/cherry-pick-team/music-downloader
