@@ -9,6 +9,7 @@ services:
       - "80"
     volumes:
       - ./services/nginx:/etc/nginx/conf.d
+      - ../frontend:/frontend
     depends_on:
       - api
 
