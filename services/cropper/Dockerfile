@@ -14,4 +14,4 @@ ENV PYTHONPATH=/usr/src/app/cut-music-service
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ./wait.sh && python cherry-pick-api.py
+CMD ./wait.sh && python bin/service.py
