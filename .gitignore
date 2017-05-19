@@ -1,2 +1,2 @@
 docker/.env
-docker/cookies.sqlite
+services/music-downloader/cookies.sqlite

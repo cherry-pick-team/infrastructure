@@ -17,7 +17,7 @@ vim docker/.env
 Также туда стоит добавлять пароли и прочую секретную информацию
 
 ## Запуск
-Убедитесь что в docker/cookies.sqlite лежит кука (мозила)
+Убедитесь что в services/music-downloader/cookies.sqlite лежит кука (мозила)
 ```bash
 sh restart-all.sh
 ```

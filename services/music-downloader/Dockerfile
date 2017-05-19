@@ -31,7 +31,7 @@ RUN apt-get install -y build-essential \
     && apt-get install -y libpq-dev gcc
 
 RUN mkdir -p ~/.mozilla/firefox/fhny313j.default
-COPY ../../docker/cookies.sqlite ~/.mozilla/firefox/fhny313j.default/
+COPY cookies.sqlite ~/.mozilla/firefox/fhny313j.default/
 
 RUN apt-get install -y python3 python3-pip netcat \
     && apt-get install -y libpq-dev gcc \
