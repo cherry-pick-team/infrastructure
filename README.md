@@ -14,10 +14,10 @@ docker volumes create pg_data
 ```bash
 vim docker/.env
 ```
-Такж туда стоит добавлять пароли и прочую секретную информацию
+Также туда стоит добавлять пароли и прочую секретную информацию
 
 ## Запуск
+Убедитесь что в services/music-downloader/cookies.sqlite лежит кука (мозила)
 ```bash
-docker-compose build
-docker-compose up
+sh restart-all.sh
 ```
