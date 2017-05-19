@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker stop $(docker ps -a -q)
+sudo docker stop $(docker ps -a -q)
 
 git submodule init
 git submodule update
