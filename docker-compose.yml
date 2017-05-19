@@ -5,11 +5,14 @@ services:
     build: ./services/nginx
     ports:
       - "80:80"
+      - "443:443"
     expose:
       - "80"
+      - "443"
     volumes:
       - ./services/nginx:/etc/nginx/conf.d
       - ../frontend:/frontend
+      - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - api
 
@@ -138,3 +141,8 @@ volumes:
     external: true
   pg_data:
     external: true
+
+networks:
+  default:
+    external:
+      name: cherry
