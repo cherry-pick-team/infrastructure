@@ -2,21 +2,19 @@ FROM python:3.5.2-slim
 
 WORKDIR /usr/src/app
 
-ENV PYTHONPATH=/usr/src/app
+RUN sh -c 'echo "deb http://www.deb-multimedia.org jessie main" > /etc/apt/sources.list.d/deb-multimedia.list' \
+     && apt-get update \
+     && apt-get install -y --force-yes netcat libpq-dev gcc git-core \
+     && apt-get install -y --force-yes deb-multimedia-keyring \
+     && apt-get install -y --force-yes ffmpeg swig libpulse-dev
 
-COPY ./requirements.txt /usr/src/app/
+ADD https://api.github.com/repos/cherry-pick-team/api/git/refs/heads/master version.json
+RUN git clone -b master https://github.com/cherry-pick-team/api.git
 
-RUN apt-get update \
-    && apt-get install -y netcat libpq-dev gcc \
-    && sh -c 'echo "deb http://www.deb-multimedia.org jessie main" > /etc/apt/sources.list.d/deb-multimedia.list' \
-    && apt-get update \
-    && apt-get install -y --force-yes deb-multimedia-keyring \
-    && apt-get update \
-    && apt-get install -y --force-yes ffmpeg swig libpulse-dev
+WORKDIR api
+ENV PYTHONPATH=/usr/src/app/api
 
 RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . /usr/src/app
 
 CMD ./wait.sh && python cherry-pick-api.py
 
