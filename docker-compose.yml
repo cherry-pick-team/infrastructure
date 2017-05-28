@@ -138,6 +138,14 @@ services:
 
   auth:
     build: ./services/auth
+    expose:
+     - "9000"
+    ports:
+     - "9000:9000"
+    environment:
+     - PS_HOST=pg
+     - PS_USER=postgres
+     - PS_PASSWORD=qwaqwa
 
 volumes:
   mongo_data:
