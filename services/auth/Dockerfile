@@ -9,7 +9,6 @@ RUN git clone -b master https://github.com/cherry-pick-team/auth-service.git
 WORKDIR auth-service
 
 RUN composer install --prefer-dist
-
-COPY ./zz-cherry.conf /usr/local/etc/php-fpm.d/zz-cherry.conf
+RUN chmod -R 777 storage
 
 CMD ["php-fpm", "-e"]
