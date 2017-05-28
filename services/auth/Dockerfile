@@ -10,4 +10,6 @@ WORKDIR auth-service
 
 RUN composer install --prefer-dist
 
+COPY ./services/auth/zz-cherry.conf /usr/local/etc/php-fpm.d/zz-cherry.conf
+
 CMD ["php-fpm", "-e"]
