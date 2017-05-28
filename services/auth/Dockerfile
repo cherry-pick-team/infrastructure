@@ -13,7 +13,7 @@ ADD https://raw.githubusercontent.com/cherry-pick-team/auth-service/master/compo
 RUN composer install --prefer-dist --no-scripts --no-autoloader && \
     rm -rf vendor
 
-ADD https://api.github.com/repos/cherry-pick-team/auth-service/contents/composer.lock version.json
+ADD https://api.github.com/repos/cherry-pick-team/auth-service/git/refs/heads/master version.json
 RUN git clone -b master https://github.com/cherry-pick-team/auth-service.git
 
 WORKDIR auth-service
