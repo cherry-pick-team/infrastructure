@@ -10,5 +10,6 @@ WORKDIR auth-service
 
 RUN composer install --prefer-dist
 RUN chmod -R 777 storage bootstrap/cache
+RUN cp .env.example .env
 
 CMD ["php-fpm", "-e"]
