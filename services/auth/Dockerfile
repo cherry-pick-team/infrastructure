@@ -21,7 +21,7 @@ WORKDIR auth-service
 RUN composer install --prefer-dist && \
     rm -rf ~/.composer
 RUN chmod -R 777 storage bootstrap/cache
-RUN cp .env.example .env
+RUN cp .env.prod .env
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["php-fpm", "-e"]
