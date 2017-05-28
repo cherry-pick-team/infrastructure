@@ -17,5 +17,5 @@ RUN composer install --prefer-dist
 RUN chmod -R 777 storage bootstrap/cache
 RUN cp .env.example .env
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["php-fpm", "-e"]
