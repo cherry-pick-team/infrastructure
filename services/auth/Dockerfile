@@ -10,14 +10,16 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 
 ADD https://raw.githubusercontent.com/cherry-pick-team/auth-service/master/composer.json composer.json
 ADD https://raw.githubusercontent.com/cherry-pick-team/auth-service/master/composer.lock composer.lock
-RUN composer install --prefer-dist --no-scripts
+RUN composer install --prefer-dist --no-scripts --no-autoloader && \
+    rm -rf vendor
 
 ADD https://api.github.com/repos/cherry-pick-team/auth-service/contents/composer.lock version.json
 RUN git clone -b master https://github.com/cherry-pick-team/auth-service.git
 
 WORKDIR auth-service
 
-RUN composer install --prefer-dist
+RUN composer install --prefer-dist && \
+    rm -rf ~/.composer
 RUN chmod -R 777 storage bootstrap/cache
 RUN cp .env.example .env
 
