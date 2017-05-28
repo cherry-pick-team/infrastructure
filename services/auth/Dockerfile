@@ -9,3 +9,5 @@ RUN git clone -b master https://github.com/cherry-pick-team/auth-service.git
 WORKDIR auth-service
 
 RUN composer install --prefer-dist
+
+CMD ["php-fpm", "-e"]
