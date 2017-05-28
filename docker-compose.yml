@@ -15,6 +15,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - api
+      - auth
 
   mongo:
     build: ./services/mongo
@@ -146,6 +147,8 @@ services:
      - PS_HOST=pg
      - PS_USER=postgres
      - PS_PASSWORD=qwaqwa
+    depends_on:
+     - pg
 
 volumes:
   mongo_data:
