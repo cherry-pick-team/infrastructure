@@ -9,6 +9,6 @@ RUN git clone -b master https://github.com/cherry-pick-team/auth-service.git
 WORKDIR auth-service
 
 RUN composer install --prefer-dist
-RUN chmod -R 777 storage
+RUN chmod -R 777 storage bootstrap/cache
 
 CMD ["php-fpm", "-e"]
