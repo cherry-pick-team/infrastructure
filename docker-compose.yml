@@ -136,6 +136,9 @@ services:
      - pg
      - mongo
 
+  auth:
+    build: ./services/auth
+
 volumes:
   mongo_data:
     external: true
