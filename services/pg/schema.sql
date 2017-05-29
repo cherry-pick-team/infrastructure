@@ -1,10 +1,3 @@
-CREATE TABLE album(
-        id      SERIAL NOT NULL PRIMARY KEY,
-        title   varchar(100)    NOT NULL,
-        cover_id        varchar(50) NOT NULL,
-        year    int NOT NULL,
-        created_at      timestamp with time zone default(now()));
-
 CREATE TABLE songs(
 	id	SERIAL	NOT NULL PRIMARY KEY,
 	author 	text	NOT NULL,
@@ -33,8 +26,16 @@ CREATE TABLE query_history(
 	created_at	timestamp with time zone default(now()));
 
 CREATE TABLE album(
-	id	SERIAIL	NOT NULL PRIMARY KEY,
+	id	SERIAL	NOT NULL PRIMARY KEY,
 	title	varchar(100)	NOT NULL,
 	cover_id	varchar(50) NOT NULL,
 	year	int NOT NULL,
 	created_at	timestamp with time zone default(now()));
+
+CREATE TABLE song_likes
+(
+	id  SERIAL  NOT NULL PRIMARY KEY,
+	song_id integer NOT NULL,
+	user_id integer NOT NULL,
+	created_at  timestamp with time zone default(now())
+);
