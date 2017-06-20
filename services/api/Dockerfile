@@ -16,5 +16,5 @@ ENV PYTHONPATH=/usr/src/app/api
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ./wait.sh && python cherry-pick-api.py
+CMD ./wait.sh && gunicorn --log-level debug --workers 4 --bind 0.0.0.0:5000 wsgi
 
