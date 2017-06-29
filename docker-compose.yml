@@ -152,6 +152,9 @@ services:
 
   telegram-bot:
     build: ./services/telegram-bot
+    environment:
+      TELEGRAM_BOT_NAME: '${TELEGRAM_BOT_NAME}'
+      TELEGRAM_BOT_KEY: '${TELEGRAM_BOT_KEY}'
 
 volumes:
   mongo_data:
