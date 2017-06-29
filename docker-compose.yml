@@ -150,6 +150,9 @@ services:
     depends_on:
      - pg
 
+  telegram-bot:
+    build: ./services/telegram-bot
+
 volumes:
   mongo_data:
     external: true
