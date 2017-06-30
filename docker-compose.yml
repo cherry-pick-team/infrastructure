@@ -16,6 +16,7 @@ services:
     depends_on:
       - api
       - auth
+      - telegram-bot
 
   mongo:
     build: ./services/mongo
