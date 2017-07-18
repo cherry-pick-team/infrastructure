@@ -6,9 +6,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    expose:
-      - "80"
-      - "443"
     volumes:
       - ./services/nginx:/etc/nginx/conf.d
       - ../frontend:/frontend
@@ -23,26 +20,19 @@ services:
     volumes:
       - mongo_data:/data/db
     ports:
-      - "27017:27017"
-    expose:
-      - "27017"
+      - "127.0.0.1:27017:27017"
 
   pg:
     build: ./services/pg
     ports:
-      - "5432:5432"
-    expose:
-      - "5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
 
   sphinx:
     build: ./services/sphinx
-    expose:
-      - "9312"
-      - "9306"
     ports:
-      - "9306:9306"
+      - "127.0.0.1:9306:9306"
     links:
       - pg
     depends_on:
@@ -51,25 +41,21 @@ services:
 
   cropper:
     build: ./services/cropper
-    expose:
-      - "8880"
     links:
       - mongo
     environment:
       - WAIT_HOSTS=mongo:27017
       - WAIT_BEFORE_HOSTS=5
     ports:
-      - "8880:8880"
+      - "127.0.0.1:8880:8880"
     depends_on:
       - mongo
     restart: always
 
   api:
     build: ./services/api
-    expose:
-      - "5000"
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"
     depends_on:
       - pg
       - mongo
@@ -92,7 +78,6 @@ services:
      - MONGO_HOST=mongo
      - SPHINX_HOST=sphinx
      - CROPPER_HOST=cropper
-     - GENIUS_KEY=whl61PGUKPylK_jgfWhWAiuasfHwq1xHxkLBWv-UTuDhGH5n69nkgygEEFivzCXj
 
   cache:
     image: memcached:alpine
@@ -100,32 +85,13 @@ services:
       - "11211"
     command: memcached -m 1024m
 
-#  crawler:
-#    build: ./services/crawler
-#    links:
-#     - pg
-#     - mongo
-#    environment:
-#     - WAIT_HOSTS=pg:5432, mongo:27017
-#     - WAIT_BEFORE_HOSTS=5
-#    - PS_HOST=pg
-#     - MONGO_HOST=mongo
-#     - PS_USER=postgres
-#     - PS_PASSWORD=qwaqwa
-#     - GENIUS_TOKEN=whl61PGUKPylK_jgfWhWAiuasfHwq1xHxkLBWv-UTuDhGH5n69nkgygEEFivzCXj
-#    depends_on:
-#     - pg
-#     - mongo
-
   yandex-music-downloader:
     build: ./services/music-downloader
     links:
      - pg
      - mongo
-    expose:
-      - "8020"
     ports:
-      - "8020:8020"
+      - "127.0.0.1:8020:8020"
     environment:
      - WAIT_HOSTS=pg:5432, mongo:27017
      - WAIT_BEFORE_HOSTS=5
@@ -133,17 +99,14 @@ services:
      - MONGO_HOST=mongo
      - PS_USER=postgres
      - PS_PASSWORD=qwaqwa
-     - GENIUS_TOKEN=whl61PGUKPylK_jgfWhWAiuasfHwq1xHxkLBWv-UTuDhGH5n69nkgygEEFivzCXj
     depends_on:
      - pg
      - mongo
 
   auth:
     build: ./services/auth
-    expose:
-     - "9000"
     ports:
-     - "9000:9000"
+     - "127.0.0.1:9000:9000"
     environment:
      - PS_HOST=pg
      - PS_USER=postgres

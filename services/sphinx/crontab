@@ -13,5 +13,5 @@ MAILTO=root
 # |  |  |  |  |
 # *  *  *  *  * root  command to be executed
 
-1  *  *  *  * root su - root -c "/usr/bin/indexer --rotate --all"
+*  7  *  *  * root su - root -c "/usr/bin/indexer --rotate --all"
 
