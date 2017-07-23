@@ -99,6 +99,7 @@ services:
      - MONGO_HOST=mongo
      - PS_USER=postgres
      - PS_PASSWORD=qwaqwa
+     - YOUTUBE='$YOUTUBE'
     depends_on:
      - pg
      - mongo
