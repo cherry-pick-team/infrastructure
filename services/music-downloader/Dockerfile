@@ -29,13 +29,11 @@ RUN apt-get install -y build-essential \
 RUN apt-get install -y python3 python3-pip netcat \
     && apt-get install -y libpq-dev gcc 
 
-COPY cookies.sqlite .
-
 ADD https://api.github.com/repos/cherry-pick-team/music-downloader/git/refs/heads/master version.json
 RUN git clone https://github.com/cherry-pick-team/music-downloader.git
 WORKDIR music-downloader
 ENV PYTHONPATH=/usr/src/app/music-downloader
 
 RUN pip install --no-cache-dir -r requirements.txt
-
+COPY cookies.sqlite ./
 CMD ./wait.sh && python main_handles.py

@@ -7,6 +7,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/*
 
+ADD https://api.github.com/repos/cherry-pick-team/cut-music-service/git/refs/heads/master version.json
 RUN git clone https://github.com/cherry-pick-team/cut-music-service.git
 
 WORKDIR cut-music-service

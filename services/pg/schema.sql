@@ -11,8 +11,8 @@ CREATE TABLE songs(
 	title 	text	NOT NULL,
 	lyrics 	text	NOT NULL,
 	file_id	varchar(50)	NOT NULL,
-        video_link	varchar(150)     NOT NULL,
-        video_preview	varchar(50)     NOT NULL,
+        video_link	varchar(250)     NOT NULL,
+        itunes_id	varchar(250)     NOT NULL,
 	created_at	timestamp with time zone default(now()),
 	album_id	int REFERENCES album);
 
