@@ -16,6 +16,8 @@ RUN git clone -b master https://github.com/cherry-pick-team/telegram-bot.git
 
 WORKDIR telegram-bot
 
+RUN chmod -R 777 downloads
+
 RUN composer install --prefer-dist && \
     rm -rf ~/.composer
 
